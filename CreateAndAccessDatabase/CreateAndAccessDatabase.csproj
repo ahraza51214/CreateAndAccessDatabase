@@ -9,8 +9,24 @@
 
   <ItemGroup>
     <None Remove="Appendix-B\" />
+    <None Remove="Appendix-B\Models\" />
+    <None Remove="Appendix-B\Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Appendix-B\" />
+    <Folder Include="Appendix-B\Models\" />
+    <Folder Include="Appendix-B\Repositories\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>
