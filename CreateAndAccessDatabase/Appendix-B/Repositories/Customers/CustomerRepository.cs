@@ -9,7 +9,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
 	public class CustomerRepository : ICustomerRepository
 	{
 
-        private readonly SqlConnection connection = new SqlConnection(ConnectionStringHelper.GetConnectionString());
+        private readonly SqlConnection connection = new SqlConnection(ConnectionStringHelper.GetConnectionstring());
 
 
         public List<Customer> GetAll()
@@ -320,9 +320,106 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
 
 
 
-        public List<string> GetMostPopularGenres(int customerId)
+        public List<Customer> GetMostPopularGenres()
         {
-            throw new NotImplementedException();
+            List<Customer> customerList = new List<Customer>();
+
+            /* Related to the string sql:
+            We join the necessary tables to associate customers with their purchased tracks and genres.
+            We group by customer and genre, counting the tracks purchased for each genre.
+            For each customer and genre, it checks if the count of tracks for that genre is equal to 
+            the highest count of tracks for any genre for that customer.
+            */
+            string sql =
+                "SELECT a.CustomerId, " +
+                    "a.FirstName, " + 
+                    "a.LastName AS CustomerName," +
+                    "a.Country, " +
+                    "a.PostalCode, " +
+                    "a.Phone, " +
+                    "a.Email, " +
+                    "e.NAME AS Genre,COUNT(e.NAME) AS TracksBought " +
+                "FROM Customer a " +
+                    "INNER JOIN Invoice b ON b.CustomerId = a.CustomerId " +
+                    "INNER JOIN InvoiceLine c ON c.InvoiceId = b.InvoiceId " +
+                    "INNER JOIN Track d ON d.TrackId = c.TrackId " +
+                    "INNER JOIN Genre e ON e.GenreId = d.GenreId " +
+                
+                    /*
+                The main query aggregates the tracks purchased by each customer for each genre:
+                */
+                "GROUP BY " +
+                    "a.CustomerId, " +
+                    "a.FirstName, " +
+                    "a.LastName, " +
+                    "a.Country, " +
+                    "a.PostalCode, " +
+                    "a.Phone, " +
+                    "a.Email, " +
+                    "e.NAME " +
+                
+                /*
+                For each customer-genre grouping, we want to see if the count of tracks purchased 
+                for that genre matches the highest count for that customer across all genres. 
+                This is accomplished with the HAVING clause:
+                */
+                "HAVING " +
+                    /*
+                    The subquery inside the HAVING clause is correlated, 
+                    meaning it runs once for every grouping in the main query. 
+                    For each grouping, it finds the maximum number of tracks purchased 
+                    from any genre for the associated customer. 
+                    If there is a tie (e.g., a customer has purchased 10 rock tracks and 10 pop tracks), 
+                    then both the counts match the maximum count found by the subquery, 
+                    so both genres are included in the result.
+                    */
+                    "COUNT(e.NAME) = ( " +
+                    "SELECT TOP 1 COUNT(e1.NAME) " +
+                    "FROM Invoice b1 " +
+                    "INNER JOIN InvoiceLine c1 ON c1.InvoiceId = b1.InvoiceId " +
+                    "INNER JOIN Track d1 ON d1.TrackId = c1.TrackId " +
+                    "INNER JOIN Genre e1 ON e1.GenreId = d1.GenreId " +
+                    "WHERE b1.CustomerId = a.CustomerId " +
+                    "GROUP BY e1.NAME " +
+                    "ORDER BY COUNT(e1.NAME) DESC " +
+                    ") " +
+                "ORDER BY " +
+                "a.CustomerId, " +
+                "TracksBought DESC; ";
+            try
+            {
+                using (connection)
+                {
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Customer customer = new Customer();
+                                customer.CustomerId = reader.GetInt32(0);
+                                customer.FirstName = reader.GetString(1);
+                                customer.LastName = reader.GetString(2);
+                                customer.Country = reader.GetString(3);
+                                customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
+                                customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
+                                customer.Email = reader.GetString(6);
+
+                                string genreName = !reader.IsDBNull(7) ? reader.GetString(7) : string.Empty;
+                                customer.PopularGenres.Add(genreName);
+                                customerList.Add(customer);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
+            }
+            return customerList;
         }
 
 

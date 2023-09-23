@@ -17,9 +17,10 @@ class Program
         // 4. PrintCustomers(repository.GetCustomersByPage(10, 5));
         // 5. repository.Add(customer);
         // 6. repository.Update(customer);
-        PrintCustomerCountry(repository.GetCustomersByCountry());
+        // 7. PrintCustomerCountry(repository.GetCustomersByCountry());
         // 8. PrintHighestSpender(repository.GetHighestSpenders());
 
+        PrintCustomers(repository.GetMostPopularGenres());
     }
 
 
@@ -31,10 +32,16 @@ class Program
         }
     }
 
-
+    /*
     static void PrintCustomer(Customer customer)
     {
         Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} ---");
+    }
+    */
+    public static void PrintCustomer(Customer customer)
+    {
+        var genres = string.Join(", ", customer.PopularGenres);
+        Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} - Genres: {genres} ---");
     }
 
 

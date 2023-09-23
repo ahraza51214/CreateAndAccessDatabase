@@ -12,6 +12,6 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
         List<Customer> GetCustomersByPage(int offset, int limit);
         List<CustomerCountry> GetCustomersByCountry();
         List<CustomerSpender> GetHighestSpenders();
-        List<string> GetMostPopularGenres(int customerId);
+        List<Customer> GetMostPopularGenres();
     }
 }
