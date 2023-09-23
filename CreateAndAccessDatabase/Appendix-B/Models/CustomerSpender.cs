@@ -1,7 +1,8 @@
 ﻿using System;
 namespace CreateAndAccessDatabase.AppendixB.Models
 {
-	public class CustomerSpender
+    // Data structure for CustomerSpender model
+    public class CustomerSpender
 	{
 		public int CustomerId { get; set; }
 		public string? CustomerName { get; set; }

@@ -1,7 +1,8 @@
 ﻿using System;
 namespace CreateAndAccessDatabase.AppendixB.Models
 {
-	public class CustomerCountry
+    // Data structure for CustomerCountry model
+    public class CustomerCountry
 	{
 		public int CustomersCount { get; set; }
 		public string? Country { get; set; }

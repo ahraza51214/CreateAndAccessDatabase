@@ -54,4 +54,7 @@ class Program
             Console.WriteLine($"Customer ID: {spender.CustomerId}, Customer Name: {spender.CustomerName}, Total Spent: {spender.TotalSpent}");
         }
     }
+
+
+
 }

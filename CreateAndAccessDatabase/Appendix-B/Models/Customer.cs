@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace CreateAndAccessDatabase.AppendixB.Models
 {
+    // Data structure for Customer object
     public partial class Customer
     {
         public int CustomerId { get; set; }
