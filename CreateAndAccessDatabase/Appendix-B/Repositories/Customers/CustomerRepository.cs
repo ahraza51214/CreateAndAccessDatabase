@@ -414,9 +414,9 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
         // The method GetMostPopularGenres() is related to Excerise 9.
         // It does not take any parameters and returns For a given customer, their most popular genre (in the case of a tie, display both). Most popular in this 
         // context means the genre that corresponds to the most tracks from invoices associated to that customer.
-        public List<Customer> GetMostPopularGenres()
+        public List<CustomerGenre> GetMostPopularGenres()
         {
-            List<Customer> customerList = new List<Customer>();
+            List<CustomerGenre> customerList = new List<CustomerGenre>();
 
             /* Related to the string sql:
             We join the necessary tables to associate customers with their purchased tracks and genres.
@@ -426,13 +426,9 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             */
             string sql =
                 "SELECT a.CustomerId, " +
-                    "a.FirstName, " + 
-                    "a.LastName AS CustomerName," +
-                    "a.Country, " +
-                    "a.PostalCode, " +
-                    "a.Phone, " +
-                    "a.Email, " +
-                    "e.NAME AS Genre,COUNT(e.NAME) AS TracksBought " +
+                    "a.FirstName + ' ' + a.LastName AS CustomerName, " + 
+                    "e.NAME AS Genre, " +
+                    "COUNT(e.NAME) AS TracksBought " +
                 "FROM Customer a " +
                     "INNER JOIN Invoice b ON b.CustomerId = a.CustomerId " +
                     "INNER JOIN InvoiceLine c ON c.InvoiceId = b.InvoiceId " +
@@ -444,12 +440,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                 */
                 "GROUP BY " +
                     "a.CustomerId, " +
-                    "a.FirstName, " +
-                    "a.LastName, " +
-                    "a.Country, " +
-                    "a.PostalCode, " +
-                    "a.Phone, " +
-                    "a.Email, " +
+                    "a.FirstName + ' ' + a.LastName, " +
                     "e.NAME " +
                 
                 /*
@@ -490,16 +481,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                         {
                             while (reader.Read())
                             {
-                                Customer customer = new Customer();
+                                CustomerGenre customer = new CustomerGenre();
                                 customer.CustomerId = reader.GetInt32(0);
-                                customer.FirstName = reader.GetString(1);
-                                customer.LastName = reader.GetString(2);
-                                customer.Country = reader.GetString(3);
-                                customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
-                                customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
-                                customer.Email = reader.GetString(6);
-
-                                string genreName = !reader.IsDBNull(7) ? reader.GetString(7) : string.Empty;
+                                customer.CustomerName = reader.GetString(1);
+                                
+                                string genreName = !reader.IsDBNull(2) ? reader.GetString(2) : string.Empty;
                                 customer.PopularGenres.Add(genreName);
                                 customerList.Add(customer);
                             }

@@ -20,6 +20,6 @@ namespace CreateAndAccessDatabase.AppendixB.Models
 
         public string Email { get; set; } = null!;
 
-        public List<string> PopularGenres { get; set; } = new List<string>();
+        
     }
 }

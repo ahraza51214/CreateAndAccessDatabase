@@ -79,19 +79,19 @@ class Program
     }
 
     // This display method are only sued by Excerise 9
-    static void PrintCustomersGenre(List<Customer> customers)
+    static void PrintCustomersGenre(List<CustomerGenre> customers)
     {
-        foreach (Customer customer in customers)
+        foreach (CustomerGenre customer in customers)
         {
             PrintCustomerGenre(customer);
         }
     }
 
     // This display method are only sued by Excerise 9
-    public static void PrintCustomerGenre(Customer customer)
+    public static void PrintCustomerGenre(CustomerGenre customer)
     {
         var genres = string.Join(", ", customer.PopularGenres);
-        Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} - Genres: {genres} ---");
+        Console.WriteLine($"--- {customer.CustomerId} {customer.CustomerName} - Genres: {genres} ---");
     }
 
     // This display method are only sued by Excerise 5
