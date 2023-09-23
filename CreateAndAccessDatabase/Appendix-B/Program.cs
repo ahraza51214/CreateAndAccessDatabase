@@ -11,7 +11,6 @@ namespace SQLClientCRUDRepo
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             // Simulating Dependency Injection (highly simplified)
             ICustomerRepository repository = new CustomerRepository();
 
@@ -21,10 +20,12 @@ namespace SQLClientCRUDRepo
 
 
             var allCustomers = repository.GetAllCustomers();
+            Console.WriteLine("Exercise 1: Print all the customer in the database: ");
             PrintCustomers(allCustomers);
-            Console.WriteLine($"{allCustomers.Count()} customers retrieved from the database.");
-            //PrintCustomers
 
+            Console.WriteLine("Exercise 2: Read a specific customer from the database (by Id): ");
+            var specificCustomerById = repository.GetCustomer(8);
+            PrintCustomer(repository.GetCustomer(8));
 
         }
 

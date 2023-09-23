@@ -6,10 +6,10 @@ namespace SQLClientCRUDRepo.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public Customer GetCustomer(string id)
+        public Customer GetCustomer(int id)
         {
             Customer customer = new Customer();
-            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customers" +
+            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer" +
                 " WHERE CustomerId = @CustomerId";
             try
             {
