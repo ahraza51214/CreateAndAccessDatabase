@@ -44,6 +44,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             catch (SqlException ex)
             {
                 // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return customerList;
         }
@@ -53,26 +54,34 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
         {
             Customer customer = new Customer();
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId = @customerId";
-            using (connection)
+            try
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                using (connection)
                 {
-                    cmd.Parameters.AddWithValue("@customerId", customerId);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                        while (reader.Read())
+                        cmd.Parameters.AddWithValue("@customerId", customerId);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            customer.CustomerId = reader.GetInt32(0);
-                            customer.FirstName = reader.GetString(1);
-                            customer.LastName = reader.GetString(2);
-                            customer.Country = reader.GetString(3);
-                            customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
-                            customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
-                            customer.Email = reader.GetString(6);
+                            while (reader.Read())
+                            {
+                                customer.CustomerId = reader.GetInt32(0);
+                                customer.FirstName = reader.GetString(1);
+                                customer.LastName = reader.GetString(2);
+                                customer.Country = reader.GetString(3);
+                                customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
+                                customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
+                                customer.Email = reader.GetString(6);
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return customer;
         }
@@ -82,28 +91,36 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
         {
             List<Customer> customerList = new List<Customer>();
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE FirstName LIKE @name OR LastName LIKE @name";
-            using (connection)
+            try
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                using (connection)
                 {
-                    cmd.Parameters.AddWithValue("@name", "%" + name + "%");
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                        while (reader.Read())
+                        cmd.Parameters.AddWithValue("@name", "%" + name + "%");
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            Customer customer = new Customer();
-                            customer.CustomerId = reader.GetInt32(0);
-                            customer.FirstName = reader.GetString(1);
-                            customer.LastName = reader.GetString(2);
-                            customer.Country = reader.GetString(3);
-                            customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
-                            customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
-                            customer.Email = reader.GetString(6);
-                            customerList.Add(customer);
+                            while (reader.Read())
+                            {
+                                Customer customer = new Customer();
+                                customer.CustomerId = reader.GetInt32(0);
+                                customer.FirstName = reader.GetString(1);
+                                customer.LastName = reader.GetString(2);
+                                customer.Country = reader.GetString(3);
+                                customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
+                                customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
+                                customer.Email = reader.GetString(6);
+                                customerList.Add(customer);
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return customerList;
         }
@@ -117,29 +134,37 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                             "ORDER BY CustomerId " +
                             "OFFSET @offset ROWS " +
                             "FETCH NEXT @limit ROWS ONLY";
-            using (connection)
+            try
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                using (connection)
                 {
-                    cmd.Parameters.AddWithValue("@offset", offset);
-                    cmd.Parameters.AddWithValue("@limit", limit);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                        while (reader.Read())
+                        cmd.Parameters.AddWithValue("@offset", offset);
+                        cmd.Parameters.AddWithValue("@limit", limit);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            Customer customer = new Customer();
-                            customer.CustomerId = reader.GetInt32(0);
-                            customer.FirstName = reader.GetString(1);
-                            customer.LastName = reader.GetString(2);
-                            customer.Country = reader.GetString(3);
-                            customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
-                            customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
-                            customer.Email = reader.GetString(6);
-                            customerList.Add(customer);
+                            while (reader.Read())
+                            {
+                                Customer customer = new Customer();
+                                customer.CustomerId = reader.GetInt32(0);
+                                customer.FirstName = reader.GetString(1);
+                                customer.LastName = reader.GetString(2);
+                                customer.Country = reader.GetString(3);
+                                customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
+                                customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
+                                customer.Email = reader.GetString(6);
+                                customerList.Add(customer);
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return customerList;
         }
@@ -150,19 +175,27 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             bool success = false;
             string sql = "INSERT INTO Customer (FirstName, LastName, Country, PostalCode, Phone, Email) " +
                             "VALUES (@firstName, @lastName, @country, @postalCode, @phone, @email)";
-            using (connection)
+            try
             {
-                connection.Open();               
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                using (connection)
                 {
-                    cmd.Parameters.AddWithValue("@firstName", customer.FirstName);
-                    cmd.Parameters.AddWithValue("@lastName", customer.LastName);
-                    cmd.Parameters.AddWithValue("@country", customer.Country);
-                    cmd.Parameters.AddWithValue("@postalCode", customer.PostalCode);
-                    cmd.Parameters.AddWithValue("@phone", customer.Phone);
-                    cmd.Parameters.AddWithValue("@email", customer.Email);
-                    success = cmd.ExecuteNonQuery() > 0 ? true : false;
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@firstName", customer.FirstName);
+                        cmd.Parameters.AddWithValue("@lastName", customer.LastName);
+                        cmd.Parameters.AddWithValue("@country", customer.Country);
+                        cmd.Parameters.AddWithValue("@postalCode", customer.PostalCode);
+                        cmd.Parameters.AddWithValue("@phone", customer.Phone);
+                        cmd.Parameters.AddWithValue("@email", customer.Email);
+                        success = cmd.ExecuteNonQuery() > 0 ? true : false;
+                    }
                 }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return success;
         }
@@ -174,20 +207,28 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             string sql = "UPDATE Customer " +
                             "SET FirstName = @firstName, LastName = @lastName, Country = @country, PostalCode = @postalCode, Phone = @phone, Email = @email " +
                             "WHERE CustomerId = @customerId";
-            using (connection)
+            try
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                using (connection)
                 {
-                    cmd.Parameters.AddWithValue("@firstName", customer.FirstName);
-                    cmd.Parameters.AddWithValue("@lastName", customer.LastName);
-                    cmd.Parameters.AddWithValue("@country", customer.Country);
-                    cmd.Parameters.AddWithValue("@postalCode", customer.PostalCode);
-                    cmd.Parameters.AddWithValue("@phone", customer.Phone);
-                    cmd.Parameters.AddWithValue("@email", customer.Email);
-                    cmd.Parameters.AddWithValue("@customerId", customer.CustomerId);
-                    cmd.ExecuteNonQuery();
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@firstName", customer.FirstName);
+                        cmd.Parameters.AddWithValue("@lastName", customer.LastName);
+                        cmd.Parameters.AddWithValue("@country", customer.Country);
+                        cmd.Parameters.AddWithValue("@postalCode", customer.PostalCode);
+                        cmd.Parameters.AddWithValue("@phone", customer.Phone);
+                        cmd.Parameters.AddWithValue("@email", customer.Email);
+                        cmd.Parameters.AddWithValue("@customerId", customer.CustomerId);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return success;
         }
@@ -207,22 +248,30 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                          "FROM Customer " +
                          "GROUP BY Country " +
                          "ORDER BY Count DESC";
-            using (connection)
+            try
             {
-                connection.Open();
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                using (connection)
                 {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                        while (reader.Read())
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            CustomerCountry customerCountry = new CustomerCountry();
-                            customerCountry.Country = !reader.IsDBNull(0) ? reader.GetString(0) : string.Empty;
-                            customerCountry.CustomersCount = reader.GetInt32(1); 
-                            customersInCountries.Add(customerCountry);
+                            while (reader.Read())
+                            {
+                                CustomerCountry customerCountry = new CustomerCountry();
+                                customerCountry.Country = !reader.IsDBNull(0) ? reader.GetString(0) : string.Empty;
+                                customerCountry.CustomersCount = reader.GetInt32(1);
+                                customersInCountries.Add(customerCountry);
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return customersInCountries;
         }
@@ -238,25 +287,33 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                          INNER JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId
                          GROUP BY Customer.CustomerId, Customer.FirstName, Customer.LastName
                          ORDER BY TotalSpent DESC";
-            using (connection)
+            try
             {
-                connection.Open(); 
-                using (SqlCommand cmd = new SqlCommand(sql, connection))
+                using (connection)
                 {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                        while (reader.Read())
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            CustomerSpender spender = new CustomerSpender
+                            while (reader.Read())
                             {
-                                CustomerId = reader.GetInt32(0),
-                                CustomerName = reader.GetString(1),
-                                TotalSpent = reader.GetDecimal(2)
-                            };
-                            highestSpenders.Add(spender);
+                                CustomerSpender spender = new CustomerSpender
+                                {
+                                    CustomerId = reader.GetInt32(0),
+                                    CustomerName = reader.GetString(1),
+                                    TotalSpent = reader.GetDecimal(2)
+                                };
+                                highestSpenders.Add(spender);
+                            }
                         }
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return highestSpenders;
         }
