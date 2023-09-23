@@ -6,6 +6,46 @@ namespace SQLClientCRUDRepo.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
+        // Excerise 1:
+        public List<Customer> GetAllCustomers()
+        {
+            List<Customer> custList = new List<Customer>();
+            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionstring()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Customer temp = new Customer();
+                                temp.CustomerId = reader.GetInt32(0);
+                                temp.FirstName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
+                                temp.LastName = !reader.IsDBNull(2) ? reader.GetString(2) : string.Empty; 
+                                temp.Country = !reader.IsDBNull(3) ? reader.GetString(3) : string.Empty;
+                                temp.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
+                                temp.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
+                                temp.Email = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty;
+                                custList.Add(temp);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
+            }
+            return custList;
+
+        }
+
+        // Excerice 2:
         public Customer GetCustomerById(int id)
         {
             Customer customer = new Customer();
@@ -44,10 +84,12 @@ namespace SQLClientCRUDRepo.Repositories
 
         }
 
-        public List<Customer> GetAllCustomers()
+        // Excerise 3:
+        public Customer GetCustomerByFirstName(string FirstName)
         {
-            List<Customer> custList = new List<Customer>();
-            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
+            Customer customer = new Customer();
+            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer" +
+                " WHERE FirstName LIKE @FirstName";
             try
             {
                 using (SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionstring()))
@@ -55,19 +97,18 @@ namespace SQLClientCRUDRepo.Repositories
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
+                        cmd.Parameters.AddWithValue("@FirstName", FirstName);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Customer temp = new Customer();
-                                temp.CustomerId = reader.GetInt32(0);
-                                temp.FirstName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
-                                temp.LastName = !reader.IsDBNull(2) ? reader.GetString(2) : string.Empty; 
-                                temp.Country = !reader.IsDBNull(3) ? reader.GetString(3) : string.Empty;
-                                temp.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
-                                temp.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
-                                temp.Email = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty;
-                                custList.Add(temp);
+                                customer.CustomerId = reader.GetInt32(0);
+                                customer.FirstName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
+                                customer.LastName = !reader.IsDBNull(2) ? reader.GetString(2) : string.Empty;
+                                customer.Country = !reader.IsDBNull(3) ? reader.GetString(3) : string.Empty;
+                                customer.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
+                                customer.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
+                                customer.Email = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty;
                             }
                         }
                     }
@@ -78,7 +119,7 @@ namespace SQLClientCRUDRepo.Repositories
                 // Log to console
                 Console.WriteLine($"SQL Error: {ex.Message}");
             }
-            return custList;
+            return customer;
 
         }
 

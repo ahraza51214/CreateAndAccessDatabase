@@ -9,8 +9,13 @@ namespace CreateAndAccessDatabase.Appendix_B.Repositories
 {
     public interface ICustomerRepository
     {
-        public Customer GetCustomerById(int id);
+        // Excerise 1:
         public List<Customer> GetAllCustomers();
+        // Excerise 2:
+        public Customer GetCustomerById(int id);
+        // Excerise 3:
+        public Customer GetCustomerByFirstName(string FirstName);
+
         public bool AddNewCustomer(Customer customer);
         public bool UpdateCustomer(Customer customer);
         public bool DeleteCustomer(string id);
