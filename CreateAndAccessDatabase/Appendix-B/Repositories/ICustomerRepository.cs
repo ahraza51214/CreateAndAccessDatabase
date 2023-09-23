@@ -20,5 +20,7 @@ namespace CreateAndAccessDatabase.Appendix_B.Repositories
         public bool AddNewCustomer(Customer customer);
         public bool UpdateCustomer(Customer customer);
         public bool DeleteCustomer(string id);
+        // Excerise 9:
+        public List<Customer> GetACustomerMostPopularGenre();
     }
 }

@@ -252,6 +252,55 @@ namespace SQLClientCRUDRepo.Repositories
             }
             return success;
         }
+
+        // Excerise 9: For a given customer, their most popular genre (in the case of a tie, display both).
+        // Most popular in this context means the genre that corresponds to the most tracks from invoices
+        // associated to that customer.
+        public List<Customer> GetACustomerMostPopularGenre()
+        {
+            List<Customer> custList = new List<Customer>();
+            string sql = "SELECT a.CustomerId, a.FirstName, a.LastName, a.Country, a.PostalCode, a.Phone, a.Email, e.Name AS GenreName FROM Customer a " +
+                "INNER JOIN Invoice b ON b.CustomerId=a.CustomerId " +
+                "INNER JOIN InvoiceLine c ON c.InvoiceId=b.InvoiceId " +
+                "INNER JOIN Track d ON d.TrackId=c.TrackId " +
+                "INNER JOIN Genre e ON e.GenreId=d.GenreId";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionstring()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Customer temp = new Customer();
+                                temp.CustomerId = reader.GetInt32(0);
+                                temp.FirstName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
+                                temp.LastName = !reader.IsDBNull(2) ? reader.GetString(2) : string.Empty;
+                                temp.Country = !reader.IsDBNull(3) ? reader.GetString(3) : string.Empty;
+                                temp.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
+                                temp.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
+                                temp.Email = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty;
+                                custList.Add(temp);
+
+                                string genreName = !reader.IsDBNull(7) ? reader.GetString(7) : string.Empty;
+                                temp.PopularGenres.Add(genreName);
+                                custList.Add(temp);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
+            }
+            return custList;
+
+        }
     }
 }
 

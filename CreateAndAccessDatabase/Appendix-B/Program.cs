@@ -35,6 +35,13 @@ namespace SQLClientCRUDRepo
             var customersByPage = repository.GetCustomersByPage(5, 3);
             PrintCustomers(customersByPage);
 
+            // Excerise 9: For a given customer, their most popular genre (in the case of a tie, display both).
+            // Most popular in this context means the genre that corresponds to the most tracks from invoices
+            // associated to that customer.
+            var customerMostPopularGenre = repository.GetACustomerMostPopularGenre();
+            Console.WriteLine("Excerise 9: For a given customer, their most popular genre: ");
+            PrintCustomers(customerMostPopularGenre);
+
         }
 
         public static void PrintCustomers(IEnumerable<Customer> customers)
@@ -44,10 +51,16 @@ namespace SQLClientCRUDRepo
                 PrintCustomer(customer);
             }
         }
-
+        /*
         public static void PrintCustomer(Customer customer)
         {
             Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} ---");
+        }*/
+        public static void PrintCustomer(Customer customer)
+        {
+            var genres = string.Join(", ", customer.PopularGenres);
+            Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} - Genres: {genres} ---");
         }
+
     }
 }
