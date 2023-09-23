@@ -1,4 +1,5 @@
-﻿using CreateAndAccessDatabase.Appendix_B.Repositories;
+﻿using Azure;
+using CreateAndAccessDatabase.Appendix_B.Repositories;
 using CreateAndAccessDatabase.Model;
 using SQLClientCRUDRepo.Repositories;
 using System;
@@ -28,6 +29,11 @@ namespace SQLClientCRUDRepo
             Console.WriteLine("\nExercise 3: Read a specific customer by FirstName (for example FirstName='Heather'): ");
             var specificCustomerByFirstName = repository.GetCustomerByFirstName("Heather");
             PrintCustomer(specificCustomerByFirstName);
+
+            // Excerise 4: Return a page of customers from the database. 
+            Console.WriteLine("\nExcerise 4: Return a page of customers from the database (for example limit=5 and offset=3):");
+            var customersByPage = repository.GetCustomersByPage(5, 3);
+            PrintCustomers(customersByPage);
 
         }
 

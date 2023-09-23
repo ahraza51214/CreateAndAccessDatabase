@@ -15,7 +15,8 @@ namespace CreateAndAccessDatabase.Appendix_B.Repositories
         public Customer GetCustomerById(int id);
         // Excerise 3:
         public Customer GetCustomerByFirstName(string FirstName);
-
+        // Excerise 4:
+        public List<Customer> GetCustomersByPage(int Limit, int Offset);
         public bool AddNewCustomer(Customer customer);
         public bool UpdateCustomer(Customer customer);
         public bool DeleteCustomer(string id);

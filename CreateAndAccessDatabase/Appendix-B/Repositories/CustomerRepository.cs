@@ -6,7 +6,7 @@ namespace SQLClientCRUDRepo.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        // Excerise 1:
+        // Exercise 1: Print all the customer in the database:
         public List<Customer> GetAllCustomers()
         {
             List<Customer> custList = new List<Customer>();
@@ -45,7 +45,7 @@ namespace SQLClientCRUDRepo.Repositories
 
         }
 
-        // Excerice 2:
+        // Exercise 2: Read a specific customer from the database (by Id=8): 
         public Customer GetCustomerById(int id)
         {
             Customer customer = new Customer();
@@ -84,7 +84,7 @@ namespace SQLClientCRUDRepo.Repositories
 
         }
 
-        // Excerise 3:
+        // Exercise 3: Read a specific customer by FirstName (for example FirstName='Heather')
         public Customer GetCustomerByFirstName(string FirstName)
         {
             Customer customer = new Customer();
@@ -120,6 +120,51 @@ namespace SQLClientCRUDRepo.Repositories
                 Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return customer;
+
+        }
+
+        // Excerise 4: Return a page of customers from the database. This should take in limit and ofset as parameters
+        // and make use of the SQL limit and offset keywords to get a subset of the customer data. 
+        public List<Customer> GetCustomersByPage(int Limit, int Offset)
+        {
+            List<Customer> custList = new List<Customer>();
+            // Making sure to ORDER BY a specific column.
+            string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer " +
+                         "ORDER BY CustomerId " + // Adjust this to the column I want to order by
+                         "OFFSET @OFFSET ROWS FETCH NEXT @LIMIT ROWS ONLY;";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionHelper.GetConnectionstring()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@LIMIT", Limit);
+                        cmd.Parameters.AddWithValue("@OFFSET", Offset);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Customer temp = new Customer();
+                                temp.CustomerId = reader.GetInt32(0);
+                                temp.FirstName = !reader.IsDBNull(1) ? reader.GetString(1) : string.Empty;
+                                temp.LastName = !reader.IsDBNull(2) ? reader.GetString(2) : string.Empty;
+                                temp.Country = !reader.IsDBNull(3) ? reader.GetString(3) : string.Empty;
+                                temp.PostalCode = !reader.IsDBNull(4) ? reader.GetString(4) : string.Empty;
+                                temp.Phone = !reader.IsDBNull(5) ? reader.GetString(5) : string.Empty;
+                                temp.Email = !reader.IsDBNull(6) ? reader.GetString(6) : string.Empty;
+                                custList.Add(temp);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
+            }
+            return custList;
 
         }
 
