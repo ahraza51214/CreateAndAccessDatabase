@@ -227,6 +227,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             return customersInCountries;
         }
 
+
         public List<CustomerSpender> GetHighestSpenders()
         {
             List<CustomerSpender> highestSpenders = new List<CustomerSpender>();

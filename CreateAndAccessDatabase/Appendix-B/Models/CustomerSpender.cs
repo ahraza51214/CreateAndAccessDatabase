@@ -8,4 +8,3 @@ namespace CreateAndAccessDatabase.AppendixB.Models
 		public decimal TotalSpent { get; set; }
 	}
 }
-
