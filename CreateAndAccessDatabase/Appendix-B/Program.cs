@@ -25,7 +25,7 @@ class Program
         PrintCustomer(specificCustomerById);
 
         // Excerise 3: Read a specific customer by FirstName
-        Console.WriteLine("\nExercise 3: Read a specific customer by FirstName (for example Name like 'Heather'):");
+        Console.WriteLine("\nExercise 3: Read a specific customer by name (for example name like 'Heather'):");
         var specificCustomerByFirstName = repository.GetCustomerByName("Heather");
         PrintCustomers(specificCustomerByFirstName);
 
