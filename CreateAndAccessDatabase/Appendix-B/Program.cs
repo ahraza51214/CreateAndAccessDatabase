@@ -24,8 +24,8 @@ namespace SQLClientCRUDRepo
             PrintCustomers(allCustomers);
 
             Console.WriteLine("Exercise 2: Read a specific customer from the database (by Id): ");
-            var specificCustomerById = repository.GetCustomer(8);
-            PrintCustomer(repository.GetCustomer(8));
+            var specificCustomerById = repository.GetCustomerById(8);
+            PrintCustomer(specificCustomerById);
 
         }
 

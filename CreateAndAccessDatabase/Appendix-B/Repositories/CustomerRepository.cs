@@ -6,7 +6,7 @@ namespace SQLClientCRUDRepo.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        public Customer GetCustomer(int id)
+        public Customer GetCustomerById(int id)
         {
             Customer customer = new Customer();
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer" +
@@ -37,7 +37,8 @@ namespace SQLClientCRUDRepo.Repositories
             }
             catch (SqlException ex)
             {
-                // Log to error
+                // Log to console
+                Console.WriteLine($"SQL Error: {ex.Message}");
             }
             return customer;
 
