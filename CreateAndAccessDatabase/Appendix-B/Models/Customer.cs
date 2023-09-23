@@ -19,6 +19,7 @@ namespace CreateAndAccessDatabase.AppendixB.Models
         public string? Phone { get; set; }
 
         public string Email { get; set; } = null!;
+
         public List<string> PopularGenres { get; set; } = new List<string>();
     }
 }

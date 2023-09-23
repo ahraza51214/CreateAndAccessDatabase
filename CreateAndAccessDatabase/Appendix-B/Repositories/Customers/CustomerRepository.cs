@@ -9,8 +9,8 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
 	public class CustomerRepository : ICustomerRepository
 	{
 
-        private readonly SqlConnection connection = new SqlConnection(ConnectionStringHelper.GetConnectionstring());
-
+        //private readonly SqlConnection connection = new SqlConnection(ConnectionStringHelper.GetConnectionstring());
+        // Exercise 1: Print all the customer in the database:
 
         public List<Customer> GetAll()
         {
@@ -18,10 +18,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -56,10 +57,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE CustomerId = @customerId";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@customerId", customerId);
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -93,10 +95,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             string sql = "SELECT CustomerId, FirstName, LastName, Country, PostalCode, Phone, Email FROM Customer WHERE FirstName LIKE @name OR LastName LIKE @name";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@name", "%" + name + "%");
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -136,10 +139,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                             "FETCH NEXT @limit ROWS ONLY";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@offset", offset);
                         cmd.Parameters.AddWithValue("@limit", limit);
@@ -177,10 +181,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                             "VALUES (@firstName, @lastName, @country, @postalCode, @phone, @email)";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@firstName", customer.FirstName);
                         cmd.Parameters.AddWithValue("@lastName", customer.LastName);
@@ -209,10 +214,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                             "WHERE CustomerId = @customerId";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@firstName", customer.FirstName);
                         cmd.Parameters.AddWithValue("@lastName", customer.LastName);
@@ -221,7 +227,8 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                         cmd.Parameters.AddWithValue("@phone", customer.Phone);
                         cmd.Parameters.AddWithValue("@email", customer.Email);
                         cmd.Parameters.AddWithValue("@customerId", customer.CustomerId);
-                        cmd.ExecuteNonQuery();
+                        //cmd.ExecuteNonQuery();
+                        success = cmd.ExecuteNonQuery() > 0 ? true : false;
                     }
                 }
             }
@@ -250,10 +257,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                          "ORDER BY Count DESC";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -289,10 +297,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                          ORDER BY TotalSpent DESC";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -364,9 +373,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                 This is accomplished with the HAVING clause:
                 */
                 "HAVING " +
-                    /*
-                    The subquery inside the HAVING clause is correlated, 
-                    meaning it runs once for every grouping in the main query. 
+                    /* 
                     For each grouping, it finds the maximum number of tracks purchased 
                     from any genre for the associated customer. 
                     If there is a tie (e.g., a customer has purchased 10 rock tracks and 10 pop tracks), 
@@ -388,10 +395,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                 "TracksBought DESC; ";
             try
             {
-                using (connection)
+                //using (connection)
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
-                    connection.Open();
-                    using (SqlCommand cmd = new SqlCommand(sql, connection))
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
