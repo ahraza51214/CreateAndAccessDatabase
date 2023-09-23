@@ -9,18 +9,9 @@ class Program
     static void Main(String[] args)
     {
         ICustomerRepository repository = new CustomerRepository();
+
+        // This is only used in Excerise 5 and 6.
         Customer customer = new Customer { CustomerId = 57, FirstName = "Ali", LastName = "Raza", Country = "Denmark", Email = "Ali@Ali.dk", Phone = "1234578", PostalCode = "2670" };
-
-        // 1. PrintCustomers(repository.GetAll());
-        // 2. PrintCustomer(repository.GetById(5));
-        // 3. PrintCustomers(repository.GetCustomerByName("roberto"));
-        // 4. PrintCustomers(repository.GetCustomersByPage(10, 5));
-        // 5. repository.Add(customer);
-        // 6. repository.Update(customer);
-        // 7. PrintCustomerCountry(repository.GetCustomersByCountry());
-        // 8. PrintHighestSpender(repository.GetHighestSpenders());
-
-        // 9. PrintCustomersGenre(repository.GetMostPopularGenres());
 
 
         // Excerise 1: Print all the customer in the database
@@ -72,7 +63,7 @@ class Program
         PrintCustomersGenre(repository.GetMostPopularGenres());
     }
 
-
+    // This display method are used by Excerice 1, 2, 3 and 4
     static void PrintCustomers(List<Customer> customers)
     {
         foreach (Customer customer in customers)
@@ -81,12 +72,13 @@ class Program
         }
     }
 
-    
+    // This display method are used by Excerice 1, 2, 3 and 4
     static void PrintCustomer(Customer customer)
     {
         Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} ---");
     }
 
+    // This display method are only sued by Excerise 9
     static void PrintCustomersGenre(List<Customer> customers)
     {
         foreach (Customer customer in customers)
@@ -95,12 +87,14 @@ class Program
         }
     }
 
+    // This display method are only sued by Excerise 9
     public static void PrintCustomerGenre(Customer customer)
     {
         var genres = string.Join(", ", customer.PopularGenres);
         Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} - Genres: {genres} ---");
     }
 
+    // This display method are only sued by Excerise 5
     public static void WasAddedDisplay(Customer customer, Boolean wasAdded)
     {
         if (wasAdded)
@@ -113,9 +107,10 @@ class Program
         }
     }
 
-    public static void WasUpdatedDisplay(Customer customer, Boolean wasAdded)
+    // This display method are only sued by Excerise 6
+    public static void WasUpdatedDisplay(Customer customer, Boolean wasUpdated)
     {
-        if (wasAdded)
+        if (wasUpdated)
         {
             Console.WriteLine("Customer was successfully updated to the database.");
         }
@@ -125,6 +120,7 @@ class Program
         }
     }
 
+    // This display method are only sued by Excerise 7
     static void PrintCustomerCountry(List<CustomerCountry> customerCountries)
     {
         foreach (CustomerCountry customerCountry in customerCountries)
@@ -133,7 +129,7 @@ class Program
         }
     }
 
-
+    // This display method are only sued by Excerise 8
     static void PrintHighestSpender(List<CustomerSpender> highestSpenders)
     {
         foreach (CustomerSpender spender in highestSpenders)
