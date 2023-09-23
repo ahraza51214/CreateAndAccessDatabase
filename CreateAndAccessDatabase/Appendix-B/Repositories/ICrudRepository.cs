@@ -1,12 +1,14 @@
 ﻿using System;
 
-namespace CreateAndAccessDatabase.AppendixB.Repositories;
-
-internal interface ICrudRepository<T, TKey>
+namespace CreateAndAccessDatabase.AppendixB.Repositories
 {
-    List<T> GetAll();
-    T GetById(TKey id);
-    T Add(T entity);
-    T Update(T entity);
-    void Delete(TKey id);
+    // General repository interface for CRUD (Crate, Update, Read, Delete) handling.
+    internal interface ICrudRepository<T>
+    {
+        List<T> GetAll();
+        T GetById(int id);
+        bool Add(T entity);
+        bool Update(T entity);
+        bool Delete(int id);
+    }
 }
