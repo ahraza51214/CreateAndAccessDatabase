@@ -2,7 +2,7 @@
 using CreateAndAccessDatabase.AppendixB.Repositories;
 using CreateAndAccessDatabase.AppendixB.Repositories.Customers;
 
-namespace CreateAndAccessDatabase;
+namespace CreateAndAccessDatabase.AppendixB;
 
 class Program
 {
@@ -17,7 +17,7 @@ class Program
         // 4. PrintCustomers(repository.GetCustomersByPage(10, 5));
         // 5. repository.Add(customer);
         // 6. repository.Update(customer);
-        // 7. PrintCustomerCountry(repository.GetCustomersByCountry());
+        PrintCustomerCountry(repository.GetCustomersByCountry());
         // 8. PrintHighestSpender(repository.GetHighestSpenders());
 
     }
