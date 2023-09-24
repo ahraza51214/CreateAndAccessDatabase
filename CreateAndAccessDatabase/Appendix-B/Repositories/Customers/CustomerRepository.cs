@@ -24,7 +24,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
@@ -75,7 +75,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
@@ -124,7 +124,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
@@ -181,7 +181,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
@@ -236,7 +236,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
@@ -279,7 +279,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
@@ -331,7 +331,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
@@ -379,7 +379,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
@@ -476,7 +476,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             {
                 // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
                 // connection to the database 'Chinook'
-                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
+                using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();

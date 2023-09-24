@@ -10,20 +10,8 @@ class Program
     {
         ICustomerRepository repository = new CustomerRepository();
 
-        // This is only used in Excerise 5 and 6.
+        // Creaeting a new customer object
         Customer customer = new Customer { CustomerId = 57, FirstName = "Ali", LastName = "Raza", Country = "Denmark", Email = "Ali@Ali.dk", Phone = "1234578", PostalCode = "2670" };
-
-<<<<<<< HEAD
-        // 1. PrintCustomers(repository.GetAll());
-        // 2. PrintCustomer(repository.GetById(5));
-        // 3. PrintCustomers(repository.GetCustomerByName("roberto"));
-        // 4. PrintCustomers(repository.GetCustomersByPage(10, 5));
-        // 5. repository.Add(customer);
-        // 6. repository.Update(customer);
-        // 7. PrintCustomerCountry(repository.GetCustomersByCountry());
-        // 8. PrintHighestSpender(repository.GetHighestSpenders());
-=======
->>>>>>> 166b7c65c6e0b943196e7e616a8591191d2aaee5
 
         // Excerise 1: Print all the customer in the database
         var allCustomers = repository.GetAll();
@@ -89,22 +77,6 @@ class Program
         Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} ---");
     }
 
-    // This display method are only used by Excerise 9
-    static void PrintCustomersGenre(List<CustomerGenre> customers)
-    {
-        foreach (CustomerGenre customer in customers)
-        {
-            PrintCustomerGenre(customer);
-        }
-    }
-
-    // This display method are only used by Excerise 9
-    public static void PrintCustomerGenre(CustomerGenre customer)
-    {
-        var genres = string.Join(", ", customer.PopularGenres);
-        Console.WriteLine($"--- {customer.CustomerId} {customer.CustomerName} - Genres: {genres} ---");
-    }
-
     // This display method are only used by Excerise 5
     public static void WasAddedDisplay(Customer customer, Boolean wasAdded)
     {
@@ -149,6 +121,13 @@ class Program
         }
     }
 
-
-
+    // This display method are only used by Excerise 9
+    static void PrintCustomersGenre(List<CustomerGenre> customerGenres)
+    {
+        foreach (CustomerGenre customerGenre in customerGenres)
+        {
+            var genres = string.Join(", ", customerGenre.PopularGenres);
+            Console.WriteLine($"--- {customerGenre.CustomerId} {customerGenre.CustomerName} - Genres: {genres} ---");
+        }
+    }
 }
