@@ -81,7 +81,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
-                        // the argument 'customerId' is just the '@customerId' in the SQL string
+                        // The argument 'customerId' is just the '@customerId' in the SQL string
                         cmd.Parameters.AddWithValue("@customerId", customerId);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -163,7 +163,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
         }
 
         // The method GetCustomersByPage(int offset, int limit) is related to Excerise 4.
-        // it takes two integer parameters offset and limits. These parameters are used
+        // It takes two integer parameters offset and limits. These parameters are used
         // to display a page of customers from the database.
         public List<Customer> GetCustomersByPage(int offset, int limit)
         {
@@ -315,10 +315,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
 
         // The method GetCustomersByCountry() is related to Excerise 7.
         // This method does not take any parameter, since as mentioned in the assignment we
-        // ju going to display all the customers from the database with the requiment
+        // just need to display all the customers from the database with the requiment
         // that we need to count the number of customers in each country, ordered descending.
         // Therefore, its SQL string is just simple. It only contains 'SELECT', 'FROM', 'GROUP BY' and
-        // the 'ORDER BY' clause. Here, we need the "GROUP BY Country ", because we need to count for each country.
+        // the 'ORDER BY' clauses. Here, we need the "GROUP BY Country ", because we need to count for
+        // each country.
         public List<CustomerCountry> GetCustomersByCountry()
         {
             List<CustomerCountry> customersInCountries = new List<CustomerCountry>();
@@ -360,9 +361,9 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
         }
 
         // The method GetHighestSpenders() is related to Excerise 8.
-        // This method does take any parameter, since the goal of this method is just to read 
+        // This method does not take any parameter, since the goal of this method is just to read 
         // Customers who are the highest spenders (total in invoice table is the largest), ordered descending.
-        // Therefore, the SQL string inside this method contains the SQL aggreated function 'SUM' and at the
+        // Therefore, the SQL string inside this method contains the SQL aggregated function 'SUM' and at the
         // same time we use 'GROUP BY' because we need to display the list for each customer.
         public List<CustomerSpender> GetHighestSpenders()
         {
@@ -412,8 +413,10 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
 
 
         // The method GetMostPopularGenres() is related to Excerise 9.
-        // It does not take any parameters and returns For a given customer, their most popular genre (in the case of a tie, display both). Most popular in this 
-        // context means the genre that corresponds to the most tracks from invoices associated to that customer.
+        // It does not take any parameters and returns for a given customer,
+        // their most popular genre (in the case of a tie, display both). Most popular in this 
+        // context means the genre that corresponds to the most tracks from invoices associated
+        // to that customer.
         public List<CustomerGenre> GetMostPopularGenres()
         {
             List<CustomerGenre> customerList = new List<CustomerGenre>();
@@ -421,7 +424,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
             /* Related to the string sql:
             We join the necessary tables to associate customers with their purchased tracks and genres.
             We group by customer and genre, counting the tracks purchased for each genre.
-            For each customer and genre, it checks if the count of tracks for that genre is equal to 
+            For each customer and genre, we checks if the count of tracks for that genre is equal to 
             the highest count of tracks for any genre for that customer.
             */
             string sql =
@@ -435,7 +438,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                     "INNER JOIN Track d ON d.TrackId = c.TrackId " +
                     "INNER JOIN Genre e ON e.GenreId = d.GenreId " +
                 
-                    /*
+                /*
                 The main query aggregates the tracks purchased by each customer for each genre:
                 */
                 "GROUP BY " +
@@ -450,7 +453,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                 */
                 "HAVING " +
                     /* 
-                    For each grouping, it finds the maximum number of tracks purchased 
+                    For each grouping, we finds the maximum number of tracks purchased 
                     from any genre for the associated customer. 
                     If there is a tie (e.g., a customer has purchased 10 rock tracks and 10 pop tracks), 
                     then both the counts match the maximum count found by the subquery, 
@@ -471,9 +474,11 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                 "TracksBought DESC; ";
             try
             {
-                //using (connection)
+                // Here we instantiate our SqlConnection and named it 'conn' and used it later to open the 
+                // connection to the database 'Chinook'
                 using (SqlConnection conn = new SqlConnection(ConnectionStringHelper.GetConnectionstring()))
                 {
+                    // Here we are oppening the connection to the database 'Chinook'
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(sql, conn))
                     {
@@ -485,6 +490,7 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                                 customer.CustomerId = reader.GetInt32(0);
                                 customer.CustomerName = reader.GetString(1);
                                 
+                                // Here we just want to take care
                                 string genreName = !reader.IsDBNull(2) ? reader.GetString(2) : string.Empty;
                                 customer.PopularGenres.Add(genreName);
                                 customerList.Add(customer);
@@ -493,6 +499,8 @@ namespace CreateAndAccessDatabase.AppendixB.Repositories.Customers
                     }
                 }
             }
+            // If something fails, it will be nice to see the error message.
+            // Therefore, we are using a try-catch and printing the error mesage in the console
             catch (SqlException ex)
             {
                 // Log to console
