@@ -78,7 +78,7 @@ class Program
         Console.WriteLine($"--- {customer.CustomerId} {customer.FirstName} {customer.LastName} {customer.Country} {customer.PostalCode} {customer.Phone} {customer.Email} ---");
     }
 
-    // This display method are only sued by Excerise 9
+    // This display method are only used by Excerise 9
     static void PrintCustomersGenre(List<CustomerGenre> customers)
     {
         foreach (CustomerGenre customer in customers)
@@ -87,14 +87,14 @@ class Program
         }
     }
 
-    // This display method are only sued by Excerise 9
+    // This display method are only used by Excerise 9
     public static void PrintCustomerGenre(CustomerGenre customer)
     {
         var genres = string.Join(", ", customer.PopularGenres);
         Console.WriteLine($"--- {customer.CustomerId} {customer.CustomerName} - Genres: {genres} ---");
     }
 
-    // This display method are only sued by Excerise 5
+    // This display method are only used by Excerise 5
     public static void WasAddedDisplay(Customer customer, Boolean wasAdded)
     {
         if (wasAdded)
@@ -107,7 +107,7 @@ class Program
         }
     }
 
-    // This display method are only sued by Excerise 6
+    // This display method are only used by Excerise 6
     public static void WasUpdatedDisplay(Customer customer, Boolean wasUpdated)
     {
         if (wasUpdated)
@@ -120,7 +120,7 @@ class Program
         }
     }
 
-    // This display method are only sued by Excerise 7
+    // This display method are only used by Excerise 7
     static void PrintCustomerCountry(List<CustomerCountry> customerCountries)
     {
         foreach (CustomerCountry customerCountry in customerCountries)
@@ -129,7 +129,7 @@ class Program
         }
     }
 
-    // This display method are only sued by Excerise 8
+    // This display method are only used by Excerise 8
     static void PrintHighestSpender(List<CustomerSpender> highestSpenders)
     {
         foreach (CustomerSpender spender in highestSpenders)
