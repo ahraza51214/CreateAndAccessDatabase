@@ -1,5 +1,4 @@
 ﻿using CreateAndAccessDatabase.AppendixB.Models;
-using CreateAndAccessDatabase.AppendixB.Repositories;
 using CreateAndAccessDatabase.AppendixB.Repositories.Customers;
 
 namespace CreateAndAccessDatabase.AppendixB;
@@ -37,12 +36,12 @@ class Program
         //You also need to add only the fields listed above (our customer object)
         Console.WriteLine("\nExcerise 5: Add a new customer to the database:");
         var wasAdded = repository.Add(customer);
-        WasAddedDisplay(customer, wasAdded);
+        WasAddedDisplay(wasAdded);
 
         //Excerise 6: Updating an existing customer
         Console.WriteLine("\nExcerise 6: Update an existing customer:");
         var wasUpdated = repository.Update(customer);
-        WasUpdatedDisplay(customer, wasUpdated);
+        WasUpdatedDisplay(wasUpdated);
 
         //Excerise 7: Returning the number of customers in each country, ordered descending (high to low). 
         Console.WriteLine("\nExcerise 7: Return the number of customers in each country, ordered descending (high to low):");
@@ -78,7 +77,7 @@ class Program
     }
 
     // This display method are only used by Excerise 5
-    public static void WasAddedDisplay(Customer customer, Boolean wasAdded)
+    public static void WasAddedDisplay(Boolean wasAdded)
     {
         if (wasAdded)
         {
@@ -91,7 +90,7 @@ class Program
     }
 
     // This display method are only used by Excerise 6
-    public static void WasUpdatedDisplay(Customer customer, Boolean wasUpdated)
+    public static void WasUpdatedDisplay(Boolean wasUpdated)
     {
         if (wasUpdated)
         {
