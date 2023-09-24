@@ -17,7 +17,7 @@ class Program
         // 4. PrintCustomers(repository.GetCustomersByPage(10, 5));
         // 5. repository.Add(customer);
         // 6. repository.Update(customer);
-        PrintCustomerCountry(repository.GetCustomersByCountry());
+        // 7. PrintCustomerCountry(repository.GetCustomersByCountry());
         // 8. PrintHighestSpender(repository.GetHighestSpenders());
 
     }
@@ -42,7 +42,7 @@ class Program
     {
         foreach (CustomerCountry customerCountry in customerCountries)
         {
-            Console.WriteLine($"Country: {customerCountry.Country}, Count: {customerCountry.CustomersCount}");
+            Console.WriteLine($"Country: {customerCountry.Country}, Customers: {customerCountry.CustomersCount}");
         }
     }
 
