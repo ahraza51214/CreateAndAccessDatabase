@@ -13,38 +13,38 @@ class Program
         // Creaeting a new customer object
         Customer customer = new Customer { CustomerId = 57, FirstName = "Ali", LastName = "Raza", Country = "Denmark", Email = "Ali@Ali.dk", Phone = "1234578", PostalCode = "2670" };
 
-        // Excerise 1: Print all the customer in the database
+        // Excerise 1: Printing all the customer in the database
         var allCustomers = repository.GetAll();
         Console.WriteLine("Exercise 1: Print all the customer in the database:");
         PrintCustomers(allCustomers);
 
-        // Excerise 2: Read a specific customer from the database by the Id
+        // Excerise 2: Reading a specific customer from the database by the Id
         Console.WriteLine("\nExercise 2: Read a specific customer from the database (by Id=8):");
         var specificCustomerById = repository.GetById(8);
         PrintCustomer(specificCustomerById);
 
-        // Excerise 3: Read a specific customer by FirstName
+        // Excerise 3: Reading a specific customer by FirstName
         Console.WriteLine("\nExercise 3: Read a specific customer by name (for example name like 'Heather'):");
         var specificCustomerByFirstName = repository.GetCustomerByName("Heather");
         PrintCustomers(specificCustomerByFirstName);
 
-        // Excerise 4: Return a page of customers from the database. 
+        // Excerise 4: Returning a page of customers from the database with given offset and limit. 
         Console.WriteLine("\nExcerise 4: Return a page of customers from the database (for example Offset=5 and Limit=3):");
         var customersByPage = repository.GetCustomersByPage(5, 3);
         PrintCustomers(customersByPage);
 
-        //Excerise 5: Add a new customer to the database.
+        //Excerise 5: Adding a new customer to the database.
         //You also need to add only the fields listed above (our customer object)
         Console.WriteLine("\nExcerise 5: Add a new customer to the database:");
         var wasAdded = repository.Add(customer);
         WasAddedDisplay(customer, wasAdded);
 
-        //Excerise 6: Update an existing customer
+        //Excerise 6: Updating an existing customer
         Console.WriteLine("\nExcerise 6: Update an existing customer:");
         var wasUpdated = repository.Update(customer);
         WasUpdatedDisplay(customer, wasUpdated);
 
-        //Excerise 7: Return the number of customers in each country, ordered descending (high to low). 
+        //Excerise 7: Returning the number of customers in each country, ordered descending (high to low). 
         Console.WriteLine("\nExcerise 7: Return the number of customers in each country, ordered descending (high to low):");
         PrintCustomerCountry(repository.GetCustomersByCountry());
 
