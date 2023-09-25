@@ -24,6 +24,6 @@ Appendix B folder contatins a Models folder, a Repositories folder and a program
 The repository folder contains interface and a customerRepository class which contains all the written methods to solve the assignment 2 Appendix B requirements.
 The program.cs file contains display methods, and it can be run to test and display all the 9 exersizes from Appendix B.
 
-OBS! The Repositories folder also contains a class ConnectionStringHelper, which contains a method GetConnectionString() to configure connection to the dataabse, 
+OBS! The Repositories folder also contains a class ConnectionStringHelper, which contains a method GetConnectionString() to configure connection to the dataabse.
 Please provide your database parameters in the method GetConnectionString() to establish connection to yout database.
 
